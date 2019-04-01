@@ -23,7 +23,7 @@ $ npm install
 To learn how to use, run:
 
 ```sh
-$ ./index.js -help
+$ ./index.js help
 ```
 
 To start the service, run:
