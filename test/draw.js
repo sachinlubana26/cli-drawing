@@ -105,4 +105,17 @@ describe('Canvas Drawing', () => {
         });
     });
 
+    describe('/fill color', () => {
+        it('it should fill canvas data for area near the given cordinates', (done) => {
+            draw.fillCordinates(10, 3, 'o');
+            assert.equal(draw.canvasData[3][10],'o');
+            assert.equal(draw.canvasData[3][9] ,'o');
+            assert.equal(draw.canvasData[3][11],'o');
+            assert.equal(draw.canvasData[3][12],'o');
+            assert.equal(draw.canvasData[4][1],' ');
+            assert.equal(draw.canvasData[4][2],' ');
+            assert.equal(draw.canvasData[4][3],' ');
+            done();
+        });
+    });
 });    

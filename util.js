@@ -102,7 +102,14 @@ const validateCLIInputs = (command, inputs) => {
                 success = false
             }
             break
+        case 'B':
+            if (inputs.length < 3 || inputs.length > 3) {
+                errorLog('\ninvalid cli input\n')
+                success = false
+            }
+            break
         default:
+            success = false
             showUsage()
             break
     }

@@ -27,7 +27,7 @@ const init = async () => {
         }
 
         inputArr.shift()
-        inputArr = inputArr.map((k) => parseInt(k))
+        //inputArr = inputArr.map((k) => parseInt(k))
 
         if (!util.validateCLIInputs(command, inputArr)) {
             util.showUsage()
@@ -42,7 +42,7 @@ const init = async () => {
 
 /*
  * runCommand: run the command given by user
- * @params: command : L, R, C
+ * @params: command : L, R, C, B
  * @params: inputs : cordinates
  * @returns:
  */
@@ -70,6 +70,16 @@ const runCommand = (command, inputs) => {
                 break
             }
             draw.drawRectangle(inputs[0], inputs[1], inputs[2], inputs[3])
+            draw.drawCanvasOutput()
+            break
+
+        case 'B':
+            const bResp = draw.validateFillCordinates(inputs[0], inputs[1], inputs[2])
+            if (!bResp.success) {
+                util.errorLog(`\n${bResp.msg}\n`)
+                break
+            }
+            draw.fillCordinates(inputs[0], inputs[1], inputs[2])
             draw.drawCanvasOutput()
             break
     }

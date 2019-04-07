@@ -51,6 +51,19 @@ const validateRectangleCordinates = (fromCol, fromRow, toCol, toRow) => {
 }
 
 /*
+ * validateFillCordinates: validate fill cordinates
+ * @params: cordinates and color
+ * @returns: boolean
+*/
+const validateFillCordinates = (startY, startX, color) => {
+    const totRows = canvasData.length - 2
+    const totCols = canvasData[0].length - 2
+    if(color.length > 1) return { success: false, msg: 'invalid color' }
+    if(startX === 0 || startX > totRows || startY === 0 || startY > totCols) return { success: false, msg: 'cordinates out of boundary' } 
+    return { success: true }
+}
+
+/*
  * drawCanvas: create canvas boundaries
  * @params: col -> number of columns
  * @params: row -> number of rows
@@ -120,6 +133,70 @@ const drawRectangle = (fromCol, fromRow, toCol, toRow) => {
 }
 
 /*
+ * fillCordinates: fill area around given cordinates
+ * @params: startX -> starting point on row
+ * @params: startY -> starting point on column
+ * @params: color  -> fill color
+ * @rturns:
+*/
+const fillCordinates = (startY, startX, color) => {
+    // fill cordinates on the top left
+    for (let i = startX; i > 0; i--) {
+        var found = 0;
+        for(let j = startY; j > 0; j--) {
+            if(canvasData[i][j] === '*') {
+                found++;
+                continue;
+            }
+            if(found === 1) continue;
+            canvasData[i][j] = color;
+        }
+    }
+
+    const totRows = canvasData.length - 2
+    const totCols = canvasData[0].length - 2
+
+    // fill cordinates on the top right
+    for (let i = startX; i > 0; i--) {
+        var found = 0;
+        for(let j = startY; j <= totCols; j++) {
+            if(canvasData[i][j] === '*') {
+                found++;
+                continue;
+            }
+            if(found === 1) continue;
+            canvasData[i][j] = color;
+        }
+    }
+
+    // fill cordinates on the bottom left
+    for (let i = startX; i <= totRows; i++) {
+        var found = 0;
+        for(let j = startY; j > 0; j--) {
+            if(canvasData[i][j] === '*') {
+                found++;
+                continue;
+            }
+            if(found === 1) continue;
+            canvasData[i][j] = color;
+        }
+    }
+
+    // fill cordinates on the bottom right
+    for (let i = startX ; i <= totRows; i++) {
+        var found = 0;
+        for(let j = startY; j <= totCols; j++) {
+            if(canvasData[i][j] === '*') {
+                found++;
+                continue;
+            }
+            if(found === 1) continue;
+            canvasData[i][j] = color;
+        }
+    }
+}
+
+/*
  * drawCanvasOutput: read canvas data and draw canvas
  * @params:
  * @rturns:
@@ -137,9 +214,11 @@ const drawCanvasOutput = () => {
 module.exports = {
   validateLineCordinates,
   validateRectangleCordinates,
+  validateFillCordinates,
   canvasData,
   drawCanvas,
   drawLine,
   drawRectangle,
-  drawCanvasOutput
+  drawCanvasOutput,
+  fillCordinates
 }
